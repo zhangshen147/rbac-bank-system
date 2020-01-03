@@ -52,7 +52,7 @@ public class MainFrame extends JFrame {
         tabbedPane.addTab("文件面板", p1);
 //        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
-        JPanel p2 = getUserPanel();
+        JPanel p2 = getRolePanel();
         tabbedPane.addTab("角色管理", p2);
 //        tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
@@ -168,11 +168,97 @@ public class MainFrame extends JFrame {
      *
      * @return
      */
-    private JPanel getUserPanel() {
-        JPanel userPanel = new JPanel(new GridLayout(2, 1));
-        userPanel.add(new Label("用户面板"));
-        return userPanel;
+    private JPanel getRolePanel() {
+
+        // 总体布局是垂直的
+        JPanel rolePanel = new JPanel();
+        BoxLayout vertical = new BoxLayout(rolePanel, BoxLayout.Y_AXIS);
+        rolePanel.setLayout(vertical);
+
+        // 得到添加角色面板
+        JPanel addRolePanel = getAddRolePanel(true, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                // TODO
+            }
+        });
+
+        // 得到删除角色面板
+        JPanel delRolePanel = getAddRolePanel(false, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                // TODO
+            }
+        });
+
+        // 得到展示列表
+        JTable showRoleTable = getShowRoleTable();
+        JScrollPane scrollPane = new JScrollPane(showRoleTable);
+        scrollPane.setSize(400, 200);
+
+        // 添加到主面板上
+        rolePanel.add(addRolePanel);
+        rolePanel.add(delRolePanel);
+        rolePanel.add(scrollPane);
+
+        return rolePanel;
     }
+
+    private JTable getShowRoleTable() {
+        String[] columnName = new String[]{"文件一", "文件二", "文件三", "文件四"};
+        String[][] rowData = new String[][]{
+                {"张三", "rw", "-", "-", "-", "-", "-"},
+                {"李四", "-", "rw", "-", "-", "-", "r"},
+                {"王五", "-", "w", "rw", "-", "-", "-"}
+        };
+
+        JTable showRoleTable = new JTable(rowData, columnName);
+
+        return showRoleTable;
+    }
+
+    /**
+     * 得到一个添加/删除角色面板
+     * @param isAddRole true表示这是一个添加角色面板，false表示这是一个删除角色面板
+     * @param listener 确认按钮对应的监听器，由 invoker 自行创建并传入
+     * @return 一个横向的面板，包括两个下拉菜单和一个确认按钮
+     */
+    private JPanel getAddRolePanel(boolean isAddRole, ActionListener listener) {
+        JPanel addOrDelRolePanel = new JPanel();
+        addOrDelRolePanel.setSize(100, 100);
+
+        JComboBox menu1=new JComboBox();
+        menu1.addItem("张三");
+        menu1.addItem("李四");
+        menu1.addItem("王五");
+
+        JComboBox menu2=new JComboBox();
+        menu2.addItem("出纳员");
+        menu2.addItem("分行管理者");
+        menu2.addItem("顾客");
+        menu2.addItem("系统管理员");
+        menu2.addItem("审计员");
+
+        // 修改按钮的标签，添加或删除
+        JButton bt_add_del = new JButton();
+        if (isAddRole == true){
+            bt_add_del.setLabel("添加");
+        }else {
+            bt_add_del.setLabel("删除");
+        }
+
+        // 为确认按钮添加监听器
+        bt_add_del.addActionListener(listener);
+
+        addOrDelRolePanel.add(new Label("User:"));
+        addOrDelRolePanel.add(menu1);
+        addOrDelRolePanel.add(new Label("Role:"));
+        addOrDelRolePanel.add(menu2);
+        addOrDelRolePanel.add(bt_add_del);
+
+        return addOrDelRolePanel;
+    }
+
 
 
     private int getOptionCode(String str) {
