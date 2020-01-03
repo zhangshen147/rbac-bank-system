@@ -1,34 +1,54 @@
 package edu.bjut.test;
 
 import com.zhangshen147.BaseDaoImpl;
-import com.zhangshen147.JdbcUtil;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-
-import java.sql.Connection;
-import java.sql.Statement;
 
 public class DaoTest {
 
-    Connection conn;
-    Statement stmt;
-    @Before
-    public void setUp() throws Exception {
-        conn = JdbcUtil.getConnection();
-        String sql = "USE rbac_db;";
-        stmt = conn.createStatement();
-        stmt.execute(sql);
+    @Test
+    public void addTest(){
+        BaseDaoImpl<UserRole> dao = new BaseDaoImpl<>();
+        dao.setProperties("dao_UserRole.properties");
+
+        UserRole ur = new UserRole();
+        ur.setUser_id(1);
+        ur.setRole_id(3);
+
+        int flag;
+
+        flag = dao.add(ur);
+        Assert.assertEquals(1,flag);
     }
 
     @Test
-    public void addTest(){
+    public void deleteTest(){
+        BaseDaoImpl<UserRole> dao = new BaseDaoImpl<>();
+        dao.setProperties("dao_UserRole.properties");
+
+        dao.delete(5);
+    }
+
+    @Test
+    public void updateTest(){
         BaseDaoImpl<User> dao = new BaseDaoImpl<>();
-        User user = new User();
-        user.setName("Alice");
-        user.setStatus(1);
+        dao.setProperties("dao_User.properties");
+
+        User u = new User();
+        u.setName("'Bob'");
+        u.setStatus(1);
         int flag;
-        flag = dao.add(user);
+        flag = dao.update(2,u);
         Assert.assertEquals(1,flag);
+    }
+
+    @Test
+    public void queryTest() {
+        // TODO queryTest
+    }
+
+    @Test
+    public void queryAllTest() {
+        // TODO queryAllTest
     }
 }
