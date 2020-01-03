@@ -53,7 +53,7 @@ public class MainFrame extends JFrame {
 //        tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
 
         JPanel p2 = getUserPanel();
-        tabbedPane.addTab("权限面板", p2);
+        tabbedPane.addTab("角色管理", p2);
 //        tabbedPane.setMnemonicAt(1, KeyEvent.VK_2);
 
         return tabbedPane;
