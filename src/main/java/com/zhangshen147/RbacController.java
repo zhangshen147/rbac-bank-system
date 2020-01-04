@@ -1,6 +1,8 @@
 package com.zhangshen147;
 
 
+import java.util.Random;
+
 public class RbacController {
     public static final int PERMISSION_READ = 0;
     public static final int PERMISSION_WRITE = 1;
@@ -15,7 +17,8 @@ public class RbacController {
      */
     public static boolean testPermission(String user, String file, int level){
         // TODO
-        // 数据填充
-        return true;
+        // 暂时随机shengcheng
+        Random random = new Random();
+        return random.nextBoolean();
     }
 }
