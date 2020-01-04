@@ -1,54 +1,38 @@
 package edu.bjut.test;
 
-import com.zhangshen147.BaseDaoImpl;
+import com.zhangshen147.Role;
+import com.zhangshen147.RoleDao;
+import com.zhangshen147.User;
+import com.zhangshen147.UserDao;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class DaoTest {
-
     @Test
-    public void addTest(){
-        BaseDaoImpl<UserRole> dao = new BaseDaoImpl<>();
-        dao.setProperties("dao_UserRole.properties");
-
-        UserRole ur = new UserRole();
-        ur.setUser_id(1);
-        ur.setRole_id(3);
-
-        int flag;
-
-        flag = dao.add(ur);
+    public void UserDaoTest(){
+        User user = new User();
+        user.setName("Haze");
+        user.setId(10086);
+        int flag = UserDao.add(user);
         Assert.assertEquals(1,flag);
+        User copy = UserDao.queryById(10086);
+        Assert.assertNotNull(copy);
+        System.out.println(copy.getName());
+        int flag2 = UserDao.delete(user);
+        Assert.assertEquals(1,flag2);
     }
 
     @Test
-    public void deleteTest(){
-        BaseDaoImpl<UserRole> dao = new BaseDaoImpl<>();
-        dao.setProperties("dao_UserRole.properties");
-
-        dao.delete(5);
-    }
-
-    @Test
-    public void updateTest(){
-        BaseDaoImpl<User> dao = new BaseDaoImpl<>();
-        dao.setProperties("dao_User.properties");
-
-        User u = new User();
-        u.setName("'Bob'");
-        u.setStatus(1);
-        int flag;
-        flag = dao.update(2,u);
+    public void RoleDaoTest(){
+        Role role = new Role();
+        role.setName("Accountant");
+        role.setId(76);
+        int flag = RoleDao.add(role);
         Assert.assertEquals(1,flag);
-    }
-
-    @Test
-    public void queryTest() {
-        // TODO queryTest
-    }
-
-    @Test
-    public void queryAllTest() {
-        // TODO queryAllTest
+        Role copy = RoleDao.queryById(role.getId());
+        Assert.assertNotNull(copy);
+        System.out.println(copy.getName());
+        int flag2 = RoleDao.delete(role);
+        Assert.assertEquals(1,flag2);
     }
 }

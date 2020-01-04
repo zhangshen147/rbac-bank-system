@@ -8,10 +8,10 @@ import java.util.Properties;
  * 建立和关闭数据库连接
  */
 public class JdbcUtil {
-    public static String DRIVERNAME = null;
-    public static String URL = null;
-    public static String USER = null;
-    public static String PASSWORD = null;
+    public static String DRIVERNAME;
+    public static String URL;
+    public static String USER;
+    public static String PASSWORD;
     public static Connection conn = null;
 
     static {
@@ -34,9 +34,7 @@ public class JdbcUtil {
                 Class.forName(DRIVERNAME);
                 conn = DriverManager.getConnection(URL,USER, PASSWORD);
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         return conn;
@@ -57,7 +55,7 @@ public class JdbcUtil {
 
     }
 
-    public static void closeResource(Connection conn, ResultSet rs, PreparedStatement st) throws SQLException {
+    public static void closeResource(Connection conn, ResultSet rs, PreparedStatement st)  {
         try {
             if(rs!=null){
                 rs.close();
